@@ -45,6 +45,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  color: white; 
+  text-decoration: none;
 }
 
 .sidebar-item:hover {

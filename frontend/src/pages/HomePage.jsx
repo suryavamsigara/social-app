@@ -7,12 +7,7 @@ export function HomePage() {
   return (
     <>
       <title>Social App</title>
-
-      <Header />
-      <main className="main-layout">
-        <SideBar />
-        <PostsFeed />
-      </main>
+      <PostsFeed />
     </>
   );
 }

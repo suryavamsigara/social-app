@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom';
 import './SideBar.css';
 
 export function SideBar() {
   return (
     <>
       <div className="left-sidebar">
-        <div className="sidebar-item">
+        <Link to="/" className="sidebar-item">
           <i className="fa fa-home home-icon"></i>
           <div>Home</div>
-        </div>
+        </Link>
         <div className="sidebar-item">
           <i className="fa fa-bell notification-icon"></i>
           <div>Notifications</div>
@@ -20,10 +21,10 @@ export function SideBar() {
           <i className="fa fa-gear settings-icon"></i>
           <div>Settings</div>
         </div>
-        <div className="sidebar-item">
+        <Link to="/profile" className="sidebar-item">
           <i className="fa fa-user user-icon"></i>
           <div>Profile</div>
-        </div>
+        </Link>
         <div className="sidebar-item">
           <i className="fa fa-plus user-icon"></i>
           <div>Create</div>
