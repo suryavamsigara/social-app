@@ -4,7 +4,7 @@ import './ProfilePage.css';
 const userProfile = {
   name: "Surya",
   username: "surya123",
-  bio: "Exploring unique UI/UX patterns. This is my new magazine-style profile page!",
+  bio: "I am Vamsi. I am into AI/ML and full stack web development",
   following: 150,
   followers: 275,
   avatarUrl: "https://placehold.co/150x150/4A5568/E2E8F0?text=S",
@@ -17,7 +17,7 @@ const userProfile = {
 
 const userPosts = [
     { id: 1, name: userProfile.name, username: userProfile.username, avatarUrl: userProfile.avatarUrl, timestamp: "5m", text: "Here's the first post on the new profile layout. What do you all think?", comments: 18, reposts: 2, likes: 53 },
-    { id: 2, name: userProfile.name, username: userProfile.username, avatarUrl: userProfile.avatarUrl, timestamp: "2h", text: "The position: sticky CSS property is incredibly powerful for creating layouts like this where one panel stays fixed while the other scrolls.", comments: 22, reposts: 8, likes: 91 },
+    { id: 2, name: userProfile.name, username: userProfile.username, avatarUrl: userProfile.avatarUrl, timestamp: "2h", text: "It is taking a lot of time to adjust the CSS properly lol", comments: 22, reposts: 8, likes: 91 },
 ];
 
 
@@ -65,108 +65,3 @@ export function ProfilePage() {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-import { PostCard } from './PostCard';
-import './ProfilePage.css';
-
-const userProfile = {
-  name: "Surya",
-  username: "surya123",
-  bio: "I am Surya Vamsi. I am building a social media app",
-  following: 150,
-  followers: 275,
-  avatarUrl: "https://placehold.co/150x150/4A5568/E2E8F0?text=S",
-  bannerUrl: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop"
-};
-
-const userPosts = [
-  {
-    id: 1,
-    avatarUrl: userProfile.avatarUrl,
-    name: userProfile.name,
-    username: userProfile.username,
-    timestamp: "5m",
-    text: "This is my first post. This is my first post. This is my first post. This is my first post.",
-    imageUrl: null,
-    comments: 12,
-    reposts: 5,
-    likes: 400,
-  },
-  {
-    id: 3,
-    avatarUrl: userProfile.avatarUrl,
-    name: userProfile.name,
-    username: userProfile.username,
-    timestamp: "2h",
-    text: "It's taking a looooooottttt of time to fix the CSS lol",
-    imageUrl: null,
-    comments: 287,
-    reposts: 8,
-    likes: 1289,
-  },
-];
-
-export function ProfilePage() {
-  return (
-    <div className="profile-page">
-      <div className="profile-header">
-        <img src={userProfile.bannerUrl} alt="Profile banner" className="profile-banner" />
-        <div className="profile-details">
-          <div className="profile-avatar-container">
-            <img src={userProfile.avatarUrl} alt="User avatar" className="profile-avatar" />
-          </div>
-          <div className="profile-actions">
-            <button className="edit-profile-button">Edit Profile</button>
-          </div>
-          <div className="profile-user-info">
-            <span className="profile-user-name">{userProfile.name}</span>
-            <span className="profile-user-username">@{userProfile.username}</span>
-          </div>
-          <p className="profile-bio">{userProfile.bio}</p>
-          <div className="profile-stats">
-            <span><span className="stat-number">{userProfile.following}</span> Following</span>
-            <span><span className="stat-number">{userProfile.followers}</span> Followers</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="profile-tabs">
-        <div className="profile-tab active-tab">Posts</div>
-        <div className="profile-tab">Replies</div>
-        <div className="profile-tab">Likes</div>
-      </div>
-
-      <div className="profile-posts-feed">
-        {userPosts.map(post => (
-          <PostCard key={post.id} post={post} />
-        ))}
-      </div>
-    </div>
-  );
-}
-*/

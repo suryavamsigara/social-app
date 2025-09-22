@@ -81,3 +81,20 @@
   
 }
 
+@media (max-width: 768px) {
+  .header {
+    justify-content: center;
+  }
+
+  .middle-section {
+    display: none;
+  }
+
+  .left-section {
+    width: auto;
+  }
+
+  .right-section {
+    display: none;
+  }
+}

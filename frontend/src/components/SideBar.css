@@ -58,3 +58,68 @@
   width: 25px;
   text-align: center;
 }
+
+
+@media (max-width: 1200px) {
+  .right-sidebar {
+    display: none;
+  }
+
+  .left-sidebar {
+    width: auto;
+    align-items: center;
+  }
+
+  /* hiding text*/
+  .sidebar-item div {
+    display: none;
+  }
+
+  .sidebar-item {
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .sidebar-item i {
+    width: auto;
+    font-size: 22px;
+  }
+}
+
+.bottom-nav {
+  display: none; /* Hidden by default on desktop */
+}
+
+/* for phone */
+
+@media (max-width: 768px) {
+  /*Hiding desktop sidebars */
+  .left-sidebar, .right-sidebar {
+    display: none;
+  }
+
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #000;
+    border-top: 1px solid rgb(30, 30, 30);
+    z-index: 1000;
+  }
+
+  .bottom-nav-item {
+    color: rgb(150, 150, 150);
+    font-size: 24px;
+  }
+
+  .bottom-nav-item.active {
+    color: white;
+  }
+}

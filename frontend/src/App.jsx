@@ -10,13 +10,13 @@ function App() {
   return (
     <>
       <Header />
-      <main className="main-layout">
-        <SideBar />
+      <SideBar />
+      <div className="main-content">      
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
-      </main>
+      </div>
     </>
   );
 }

@@ -1,11 +1,21 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.main-layout {
+.main-content {
   display: flex;
   flex-direction: row;
+  margin-left: 280px;
+  margin-right: 280px;
+  margin-top: 50px;
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    margin-left: 120px;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
