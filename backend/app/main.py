@@ -1,12 +1,26 @@
 from fastapi import FastAPI, Response, status, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from .database import engine
 from . import models
+from .routers import post
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 try:
     conn = psycopg2.connect(host='localhost', database='social_app', user='postgres', password='Ilovespacex123', cursor_factory=RealDictCursor)
@@ -15,6 +29,8 @@ try:
 except Exception as error:
     print("Connecting to database failed")
     print("Error: ", error)
+
+app.include_router(post.router)
 
 @app.get("/")
 def root():

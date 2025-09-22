@@ -8,10 +8,32 @@ export function CreatePost({ isOpen, onClose }) {
     return null;
   }
 
-  const handleUpload = () => {
-    console.log("Uploading post:", postText);
-    setPostText('');
-    onClose(); 
+  const handleUpload = async () => {
+    const postData = {
+      content: postText,
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/posts/', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const newPost = await response.json();
+      console.log("Successfully created post: ", newPost)
+
+      setPostText('');
+      onClose();
+    } catch (error) {
+      console.log("Failed to create post: ", error);
+    } 
   };
 
   return (
