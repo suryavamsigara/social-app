@@ -16,20 +16,38 @@ class Userout(BaseModel):
     email: EmailStr
     created_at: datetime
 
-    class config:
+    class Config:
         from_attributes = True
 
 # schema for response
 class Post(PostBase):
     id: int
     created_at: datetime
-    #owner_id: int
-    #owner: Userout
+    owner_id: int
+    owner: Userout
 
-    class config:
+    class Config:
         from_attributes = True
 
 class PostOut(BaseModel):
     Post: Post
-    class config:
+    
+    class Config:
         from_attributes = True
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+    name: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[int] = None
+
