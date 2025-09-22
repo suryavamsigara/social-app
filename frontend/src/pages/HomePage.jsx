@@ -1,6 +1,7 @@
 import './HomePage.css'
 import { Header } from '../components/Header'
 import { SideBar } from '../components/SideBar';
+import { PostsFeed } from './PostsFeed';
 
 export function HomePage() {
   return (
@@ -8,7 +9,10 @@ export function HomePage() {
       <title>Social App</title>
 
       <Header />
-      <SideBar />
+      <main className="main-layout">
+        <SideBar />
+        <PostsFeed />
+      </main>
     </>
   );
 }

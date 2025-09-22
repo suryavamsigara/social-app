@@ -1,0 +1,9 @@
+.main-layout {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  
+  padding-top: 50px;
+  height: 100vh;
+  box-sizing: border-box;
+}

@@ -1,7 +1,7 @@
 .header {
   background-color: rgb(1, 1, 1);
   color: white;
-  border-bottom: 0.1px solid rgb(70, 70, 70);
+  border-bottom: 1px solid rgb(30, 30, 30);
 
   display: flex;
   align-items: center;
@@ -38,36 +38,45 @@
 
 }
 
-.search-icon {
+.search-box:hover {
+  border: 1px solid rgb(134, 131, 131);
+  border-radius: 4px;
+}
+
+.search-box i {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: rgb(213, 213, 213);
   height: 32px;
-  width: 40px;
   background-color: rgb(1, 1, 1);
-  border: 1px solid rgb(70, 70, 70);
+  border: 1px solid rgb(30, 30, 30);
   border-right: none;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 0 8px;
   box-sizing: border-box;
+  font-size: 24px;
+  text-align: center;
+  width: 36px;
 }
 
 .search-input {
   background-color: rgb(1, 1, 1);
   color: white;
-  border: 1px solid rgb(70, 70, 70);
+  border: 1px solid rgb(30, 30, 30);
+  border-left: none;
   width: 340px;
   height: 32px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   font-size: 16px;
   box-sizing: border-box; /*Includes border in the height*/
-  padding-left: 12px;
+  padding-left: 5px;
 }
 
 .search-input:focus {
-    outline: none;
+  outline: none;
+  
 }
 
