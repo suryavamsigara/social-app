@@ -19,6 +19,13 @@
   width: 180px;
 }
 
+.left-section img {
+  height: 40px; 
+  width: auto;
+  border-radius: 50px;
+  margin-left: 28px;
+}
+
 .middle-section {
   flex: 1;
   padding: 20px;

@@ -80,11 +80,10 @@
   transition: color 0.2s ease-in-out;
 }
 
-/* --- Action Hover Effects --- */
 .post-action:nth-child(1):hover { color: #1d9bf0; }
 .post-action:nth-child(2):hover { color: #00ba7c; }
-.post-action:nth-child(3):hover { color: #f91880; }
-.post-action:nth-child(4):hover { color: #1d9bf0; }
+.post-action:nth-child(3):hover { color: #9ea316; }
+.post-action:nth-child(4):hover { color: #f01d40; }
 
 @media (max-width: 768px) {
   .posts-feed {

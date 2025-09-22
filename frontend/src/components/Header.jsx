@@ -4,7 +4,7 @@ export function Header() {
   return (
     <div className="header">
       <div className="left-section">
-        logo
+        <img src="../../logo.png" alt="logo"/>
       </div>
 
       <div className="middle-section">

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './SideBar.css';
 
-export function SideBar() {
+export function SideBar({ onPostClick }) {
   return (
     <>
       <div className="left-sidebar">
@@ -25,10 +25,10 @@ export function SideBar() {
           <i className="fa fa-user user-icon"></i>
           <div>Profile</div>
         </NavLink>
-        <div className="sidebar-item">
+        <button className="sidebar-item create-post-button" onClick={onPostClick}>
           <i className="fa fa-plus user-icon"></i>
           <div>Create</div>
-        </div>
+        </button>
       </div>
 
       <div className="right-sidebar">
@@ -46,7 +46,7 @@ export function SideBar() {
         <NavLink to="/search" className="bottom-nav-item">
           <i className="fa fa-search"></i>
         </NavLink>
-        <NavLink className="bottom-nav-item">
+        <NavLink className="create-post-button bottom-nav-item" onClick={onPostClick}>
           <i className="fa fa-plus"></i>
         </NavLink>
         <NavLink to="/notifications" className="bottom-nav-item">
