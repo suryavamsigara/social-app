@@ -31,6 +31,8 @@ class Post(PostBase):
 
 class PostOut(BaseModel):
     Post: Post
+    likes: int
+    reposts: int
     
     class Config:
         from_attributes = True
@@ -51,3 +53,10 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     id: Optional[int] = None
 
+class Like(BaseModel):
+    post_id: int
+    dir: Literal[0, 1]
+
+class Repost(BaseModel):
+    post_id: int
+    dir: Literal[0, 1]

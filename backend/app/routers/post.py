@@ -1,6 +1,7 @@
 from fastapi import Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, select
+from sqlalchemy.orm import joinedload
 from typing import List, Optional
 from .. import models, schemas, oauth2
 from ..database import get_db
@@ -10,10 +11,30 @@ router = APIRouter(
     tags=['Posts']
 )
 
-@router.get("/", response_model=List[schemas.Post])
+@router.get("/", response_model=List[schemas.PostOut])
 def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    posts = db.query(models.Post).all()
-    return posts
+    likes_subquery = select(
+        models.Like.post_id, 
+        func.count(models.Like.user_id).label("likes")
+    ).group_by(models.Like.post_id).subquery()
+
+    reposts_subquery = select(
+        models.Repost.post_id,
+        func.count(models.Repost.user_id).label("reposts")
+    ).group_by(models.Repost.post_id).subquery()
+
+    results = db.query(
+        models.Post, 
+        func.coalesce(likes_subquery.c.likes, 0).label("likes"),
+        func.coalesce(reposts_subquery.c.reposts, 0).label("reposts")
+    ).outerjoin(
+        likes_subquery, likes_subquery.c.post_id == models.Post.id
+    ).outerjoin(
+        reposts_subquery, reposts_subquery.c.post_id == models.Post.id
+    ).options(
+        joinedload(models.Post.owner)
+    ).all()
+    return results
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
