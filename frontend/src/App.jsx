@@ -13,6 +13,7 @@ function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -20,6 +21,27 @@ function App() {
       setIsAuthenticated(true);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const response = await fetch('http://127.0.0.1:8000/posts', {
+          headers: {'Authorization': `Bearer ${token}`}
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data)
+        }
+      }
+    }
+    fetchPosts();
+  }, [isAuthenticated]);
+
+  const addPost = (newPost) => {
+    setPosts([newPost, ...posts])
+  };
 
   const handleLogin = () => {
     setIsLoginModalOpen(true);
@@ -40,11 +62,15 @@ function App() {
       />
       <div className="main-content">      
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage posts={posts} />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </div>
-      <CreatePost isOpen={isCreatePostModalOpen} onClose={() => setIsCreatePostModalOpen(false)} />
+      <CreatePost
+        isOpen={isCreatePostModalOpen}
+        onClose={() => setIsCreatePostModalOpen(false)}
+        onPostCreated={addPost}
+      />
       <UserLogin
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}

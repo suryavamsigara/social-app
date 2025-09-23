@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './CreatePost.css';
 
-export function CreatePost({ isOpen, onClose }) {
+export function CreatePost({ isOpen, onClose, onPostCreated }) {
   const [postText, setPostText] = useState('');
 
   if (!isOpen) {
@@ -11,6 +11,7 @@ export function CreatePost({ isOpen, onClose }) {
   const handleUpload = async () => {
     const postData = {
       content: postText,
+      name: name,
     };
 
     try {
@@ -36,6 +37,8 @@ export function CreatePost({ isOpen, onClose }) {
 
       const newPost = await response.json();
       console.log("Successfully created post: ", newPost)
+
+      onPostCreated(newPost);
 
       setPostText('');
       onClose();

@@ -13,6 +13,7 @@ class PostCreate(PostBase):
 # the shape when we send back the user to the client that requested it
 class Userout(BaseModel):
     id: int
+    name: str
     email: EmailStr
     created_at: datetime
 

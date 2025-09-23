@@ -1,36 +1,38 @@
+import { TimeAgo } from '../components/TimeAgo';
 import './PostCard.css'
 
-export function PostCard({post}) {
-    return (
+export function PostCard({postData}) {
+  const { Post, likes, reposts } = postData;
+  return (
     <div className="post-card">
       <div className="post-header">
-        <img src={post.avatarUrl} alt={`${post.name}'s avatar`} className="post-avatar" />
+        <img src={postData.Post.avatarUrl} alt={`${Post.owner.name}'s avatar`} className="post-avatar" />
         <div className="post-author">
-          <span className="post-author-name">{post.name}</span>
-          <span className="post-author-username">@{post.username} · {post.timestamp}</span>
+          <span className="post-author-name">{Post.owner.name}</span>
+          <span className="post-author-username">@{Post.owner.email} · {<TimeAgo timestamp={Post.created_at} />}</span>
         </div>
       </div>
 
       <div className="post-body">
-        <p>{post.text}</p>
-        {post.imageUrl && <img src={post.imageUrl} alt="Post content" className="post-image" />}
+        <p>{Post.content}</p>
+        {Post.imageUrl && <img src={Post.imageUrl} alt="Post content" className="post-image" />}
       </div>
 
       <div className="post-footer">
         <div className="post-action">
           <i className="fa fa-comment"></i>
-          <span>{post.comments}</span>
+          <span>{2}</span>
         </div>
         <div className="post-action">
           <i className="fa fa-share"></i>
         </div>
         <div className="post-action">
           <i className="fa fa-retweet"></i>
-          <span>{post.reposts}</span>
+          <span>{reposts}</span>
         </div>
         <div className="post-action">
           <i className="fa fa-heart"></i>
-          <span>{post.likes}</span>
+          <span>{likes}</span>
         </div>
       </div>
     </div>

@@ -3,11 +3,11 @@ import { Header } from '../components/Header'
 import { SideBar } from '../components/SideBar';
 import { PostsFeed } from './PostsFeed';
 
-export function HomePage() {
+export function HomePage({ posts }) {
   return (
     <>
       <title>Social App</title>
-      <PostsFeed />
+      <PostsFeed posts={posts} />
     </>
   );
 }

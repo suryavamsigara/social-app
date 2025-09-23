@@ -1,6 +1,7 @@
 import { PostCard } from './PostCard'
 
-export function PostsFeed() {
+export function PostsFeed({ posts }) {
+  /*
   const feedPosts = [
     {
       id: 1,
@@ -75,11 +76,16 @@ export function PostsFeed() {
       likes: 18,
     }
   ];
+  */
+
+  posts.map((item) => {
+    item.Post.avatarUrl = "https://placehold.co/48x48/CBD5E0/4A5568?text=V";
+  })
 
   return (
     <div className="posts-feed">
-      {feedPosts.map((post) => (
-        <PostCard key={post.id} post={post} />
+      {posts.map((item) => (
+        <PostCard key={item.Post.id} postData={item} />
       ))}
     </div>
   );
