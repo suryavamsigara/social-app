@@ -125,3 +125,14 @@
     color: white;
   }
 }
+
+.auth-button {
+  margin-top: auto;
+  width: 200px;
+  background-color: #154361;
+  font-weight: bold;
+}
+
+.auth-button:hover {
+  background-color: #104b72;
+}

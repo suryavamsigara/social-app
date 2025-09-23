@@ -14,10 +14,18 @@ export function CreatePost({ isOpen, onClose }) {
     };
 
     try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+          console.error("Authentication token not found. Please log in.");
+          return; 
+      }
+
       const response = await fetch('http://127.0.0.1:8000/posts/', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(postData),
       });
