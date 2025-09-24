@@ -40,7 +40,12 @@ function App() {
   }, [isAuthenticated]);
 
   const addPost = (newPost) => {
-    setPosts([newPost, ...posts])
+    const formattedPost = {
+      Post: newPost,
+      likes: 0,
+      reposts: 0,
+    };
+    setPosts([formattedPost, ...posts]);
   };
 
   const handleLogin = () => {

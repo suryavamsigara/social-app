@@ -11,15 +11,14 @@ export function CreatePost({ isOpen, onClose, onPostCreated }) {
   const handleUpload = async () => {
     const postData = {
       content: postText,
-      name: name,
     };
 
     try {
       const token = localStorage.getItem('token');
 
       if (!token) {
-          console.error("Authentication token not found. Please log in.");
-          return; 
+        console.error("Authentication token not found. Please log in.");
+        return; 
       }
 
       const response = await fetch('http://127.0.0.1:8000/posts/', {

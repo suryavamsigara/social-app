@@ -14,6 +14,7 @@ class PostCreate(PostBase):
 class Userout(BaseModel):
     id: int
     name: str
+    username: str
     email: EmailStr
     created_at: datetime
 
@@ -39,6 +40,7 @@ class PostOut(BaseModel):
         from_attributes = True
 
 class UserCreate(BaseModel):
+    username: str
     email: EmailStr
     password: str
     name: str
