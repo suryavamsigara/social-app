@@ -47,18 +47,36 @@
   transition: background-color 0.2s ease-in-out;
   color: white; 
   text-decoration: none;
-  background-color: black;
+  background-color: transparent;
   border: none;
+  border-radius: 999px;
+  text-align: left;
 }
 
 .sidebar-item:hover {
-  background-color: rgb(15, 15, 15);
+  background-color: rgb(20, 20, 20);
+}
+
+.sidebar-item.active {
+  font-weight: bold;
+  background-color: rgb(20, 20, 20);
 }
 
 .sidebar-item i {
   font-size: 20px;
   width: 25px;
   text-align: center;
+}
+
+.auth-button {
+  margin-top: auto;
+  background-color: #154361;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.auth-button:hover {
+  background-color: #104b72;
 }
 
 
@@ -82,11 +100,18 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    padding: 0;
   }
 
   .sidebar-item i {
     width: auto;
     font-size: 22px;
+    margin: 0;
+  }
+
+  .auth-button {
+    height: 50px;
+    width: 50px;
   }
 }
 
@@ -124,15 +149,4 @@
   .bottom-nav-item.active {
     color: white;
   }
-}
-
-.auth-button {
-  margin-top: auto;
-  width: 200px;
-  background-color: #154361;
-  font-weight: bold;
-}
-
-.auth-button:hover {
-  background-color: #104b72;
 }

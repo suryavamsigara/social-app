@@ -33,7 +33,7 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
             </button>
 
             <button className="sidebar-item auth-button" onClick={onLogout}>
-              <i className="fa fa-sign-out-alt"></i>
+              <i className="fa fa-sign-out"></i>
               <div>Logout</div>
             </button>
           </>
@@ -44,7 +44,7 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
               <div>Home</div>
             </NavLink>
             <button className="sidebar-item auth-button" onClick={onLogin}>
-              <i className="fa fa-sign-in-alt"></i>
+              <i className="fa fa-sign-in"></i>
               <div>Login</div>
             </button>
           </>
