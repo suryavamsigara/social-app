@@ -9,7 +9,7 @@ export function PostCard({postData}) {
         <img src={postData.Post.avatarUrl} alt={`${Post.owner.name}'s avatar`} className="post-avatar" />
         <div className="post-author">
           <span className="post-author-name">{Post.owner.name}</span>
-          <span className="post-author-username">@{Post.owner.email} · {<TimeAgo timestamp={Post.created_at} />}</span>
+          <span className="post-author-username">@{Post.owner.username} · {<TimeAgo timestamp={Post.created_at} />}</span>
         </div>
       </div>
 

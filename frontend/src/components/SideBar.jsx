@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import './SideBar.css';
 
-export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick }) {
+export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, currentUser }) {
   return (
     <>
       <div className="left-sidebar">
-        {isAuthenticated ? (
+        {isAuthenticated && currentUser ? (
           <>
             <NavLink to="/" className="sidebar-item">
               <i className="fa fa-home home-icon"></i>
@@ -23,7 +23,7 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick }) {
               <i className="fa fa-gear settings-icon"></i>
               <div>Settings</div>
             </div>
-            <NavLink to="/profile" className="sidebar-item">
+            <NavLink to={`/profile/${currentUser.username}`} className="sidebar-item">
               <i className="fa fa-user user-icon"></i>
               <div>Profile</div>
             </NavLink>
@@ -73,9 +73,11 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick }) {
         <NavLink to="/notifications" className="bottom-nav-item">
           <i className="fa fa-bell"></i>
         </NavLink>
-        <NavLink to="/profile" className="bottom-nav-item">
-          <i className="fa fa-user"></i>
-        </NavLink>  
+        {currentUser && (
+          <NavLink to={`/profile/${currentUser.username}`} className="bottom-nav-item">
+            <i className="fa fa-user"></i>
+          </NavLink>
+        )} 
       </nav>
     </>
   );

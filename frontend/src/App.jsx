@@ -11,15 +11,35 @@ import './App.css'
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
 
+  /**
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
     }
+  }, []); **/
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const response = await fetch('http://127.0.0.1:8000/users/myprofile/me', {
+          headers: {'Authorization': `Bearer ${token}`}
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setCurrentUser(userData);
+          setIsAuthenticated(true);
+        }
+      }
+    };
+    fetchCurrentUser();
   }, []);
 
   useEffect(() => {
@@ -64,11 +84,12 @@ function App() {
         isAuthenticated={isAuthenticated}
         onLogin={handleLogin}
         onLogout={handleLogout}
+        currentUser={currentUser}
       />
       <div className="main-content">      
         <Routes>
           <Route path="/" element={<HomePage posts={posts} />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:username" element={<ProfilePage currentUser={currentUser} />} />
         </Routes>
       </div>
       <CreatePost

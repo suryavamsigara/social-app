@@ -43,3 +43,33 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), curren
     db.commit()
     db.refresh(new_post)
     return new_post
+
+@router.get("/user/{username}", response_model=List[schemas.PostOut])
+def get_posts_by_user(username: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with username: {username} does not exist")
+    
+    likes_subquery = select(
+        models.Like.post_id, 
+        func.count(models.Like.user_id).label("likes")
+    ).group_by(models.Like.post_id).subquery()
+
+    reposts_subquery = select(
+        models.Repost.post_id,
+        func.count(models.Repost.user_id).label("reposts")
+    ).group_by(models.Repost.post_id).subquery()
+
+    results = db.query(
+        models.Post, 
+        func.coalesce(likes_subquery.c.likes, 0).label("likes"),
+        func.coalesce(reposts_subquery.c.reposts, 0).label("reposts")
+    ).outerjoin(
+        likes_subquery, likes_subquery.c.post_id == models.Post.id
+    ).outerjoin(
+        reposts_subquery, reposts_subquery.c.post_id == models.Post.id
+    ).options(
+        joinedload(models.Post.owner)
+    ).filter(models.Post.owner_id == user.id).all()
+
+    return results
