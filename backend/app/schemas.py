@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, conint
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional, Literal
 
@@ -16,6 +16,7 @@ class Userout(BaseModel):
     name: str
     username: str
     email: EmailStr
+    bio: Optional[str] = None
     created_at: datetime
 
     class Config:
@@ -35,6 +36,7 @@ class PostOut(BaseModel):
     Post: Post
     likes: int
     reposts: int
+    liked_by_user: bool
     
     class Config:
         from_attributes = True
@@ -44,6 +46,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
     name: str
+    bio: Optional[str] = None
 
 class UserLogin(BaseModel):
     email: EmailStr

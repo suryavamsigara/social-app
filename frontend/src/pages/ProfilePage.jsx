@@ -37,10 +37,10 @@ export function ProfilePage({ currentUser }) {
 
       try {
         const profileResponse = await fetch(`http://127.0.0.1:8000/users/${username}`, {
-          headers: {'Authorization': `Bearer: ${token}`}
+          headers: {'Authorization': `Bearer ${token}`}
         });
         const postsResponse = await fetch(`http://127.0.0.1:8000/posts/user/${username}`, {
-          headers: {'Authorization': `Bearer: ${token}`}
+          headers: {'Authorization': `Bearer ${token}`}
         })
 
         if (!profileResponse.ok || !postsResponse.ok) {
@@ -90,7 +90,7 @@ export function ProfilePage({ currentUser }) {
       </div>
 
       <div className="profile-infobar">
-        <p className="infobar-bio">{userProfile.bio}</p>
+        <p className="infobar-bio">{profile.bio}</p>
         <div className="infobar-stats">
           <span><span className="stat-number">{userProfile.following}</span> Following</span>
           <span><span className="stat-number">{userProfile.followers}</span> Followers</span>

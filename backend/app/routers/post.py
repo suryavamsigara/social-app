@@ -12,28 +12,38 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[schemas.PostOut])
-def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    likes_subquery = select(
-        models.Like.post_id, 
-        func.count(models.Like.user_id).label("likes")
-    ).group_by(models.Like.post_id).subquery()
-
-    reposts_subquery = select(
-        models.Repost.post_id,
-        func.count(models.Repost.user_id).label("reposts")
-    ).group_by(models.Repost.post_id).subquery()
+def get_posts(db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
+    likes_cte = (
+        select(models.Like.post_id, func.count(models.Like.user_id).label("likes"))
+        .group_by(models.Like.post_id)
+        .cte("likes_cte")
+    )
+    reposts_cte = (
+        select(models.Repost.post_id, func.count(models.Repost.user_id).label("reposts"))
+        .group_by(models.Repost.post_id)
+        .cte("reposts_cte")
+    )
+    user_likes_cte = (
+        select(models.Like.post_id.label("post_id"))
+        .where(models.Like.user_id == current_user.id)
+        .cte("user_likes_cte")
+    )
 
     results = db.query(
-        models.Post, 
-        func.coalesce(likes_subquery.c.likes, 0).label("likes"),
-        func.coalesce(reposts_subquery.c.reposts, 0).label("reposts")
+        models.Post,
+        func.coalesce(likes_cte.c.likes, 0).label("likes"),
+        func.coalesce(reposts_cte.c.reposts, 0).label("reposts"),
+        (user_likes_cte.c.post_id != None).label("liked_by_user")
     ).outerjoin(
-        likes_subquery, likes_subquery.c.post_id == models.Post.id
+        likes_cte, likes_cte.c.post_id == models.Post.id
     ).outerjoin(
-        reposts_subquery, reposts_subquery.c.post_id == models.Post.id
+        reposts_cte, reposts_cte.c.post_id == models.Post.id
+    ).outerjoin(
+        user_likes_cte, user_likes_cte.c.post_id == models.Post.id
     ).options(
         joinedload(models.Post.owner)
     ).all()
+
     return results
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
@@ -45,31 +55,44 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), curren
     return new_post
 
 @router.get("/user/{username}", response_model=List[schemas.PostOut])
-def get_posts_by_user(username: str, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.username == username).first()
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with username: {username} does not exist")
-    
-    likes_subquery = select(
-        models.Like.post_id, 
-        func.count(models.Like.user_id).label("likes")
-    ).group_by(models.Like.post_id).subquery()
+def get_posts_by_user(username: str, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
 
-    reposts_subquery = select(
-        models.Repost.post_id,
-        func.count(models.Repost.user_id).label("reposts")
-    ).group_by(models.Repost.post_id).subquery()
+    profile_user = db.query(models.User).filter(models.User.username == username).first()
+    if not profile_user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"User with username: {username} does not exist")
+    
+    likes_cte = (
+        select(models.Like.post_id, func.count(models.Like.user_id).label("likes"))
+        .group_by(models.Like.post_id)
+        .cte("likes_cte")
+    )
+    reposts_cte = (
+        select(models.Repost.post_id, func.count(models.Repost.user_id).label("reposts"))
+        .group_by(models.Repost.post_id)
+        .cte("reposts_cte")
+    )
+    user_likes_cte = (
+        select(models.Like.post_id.label("post_id"))
+        .where(models.Like.user_id == current_user.id)
+        .cte("user_likes_cte")
+    )
 
     results = db.query(
-        models.Post, 
-        func.coalesce(likes_subquery.c.likes, 0).label("likes"),
-        func.coalesce(reposts_subquery.c.reposts, 0).label("reposts")
+        models.Post,
+        func.coalesce(likes_cte.c.likes, 0).label("likes"),
+        func.coalesce(reposts_cte.c.reposts, 0).label("reposts"),
+        (user_likes_cte.c.post_id != None).label("liked_by_user")
     ).outerjoin(
-        likes_subquery, likes_subquery.c.post_id == models.Post.id
+        likes_cte, likes_cte.c.post_id == models.Post.id
     ).outerjoin(
-        reposts_subquery, reposts_subquery.c.post_id == models.Post.id
+        reposts_cte, reposts_cte.c.post_id == models.Post.id
+    ).outerjoin(
+        user_likes_cte, user_likes_cte.c.post_id == models.Post.id
     ).options(
         joinedload(models.Post.owner)
-    ).filter(models.Post.owner_id == user.id).all()
+    ).filter(
+        models.Post.owner_id == profile_user.id
+    ).all()
 
     return results

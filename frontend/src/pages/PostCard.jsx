@@ -1,8 +1,11 @@
+import { LikePost } from '../options/LikePost';
 import { TimeAgo } from '../components/TimeAgo';
 import './PostCard.css'
 
 export function PostCard({postData}) {
-  const { Post, likes, reposts } = postData;
+  const { Post, likes, reposts, liked_by_user } = postData;
+  console.log("Post ID:", Post.id, " is liked by current user:", liked_by_user);
+
   return (
     <div className="post-card">
       <div className="post-header">
@@ -30,10 +33,11 @@ export function PostCard({postData}) {
           <i className="fa fa-retweet"></i>
           <span>{reposts}</span>
         </div>
-        <div className="post-action">
-          <i className="fa fa-heart"></i>
-          <span>{likes}</span>
-        </div>
+        <LikePost
+          postId={Post.id}
+          isInitiallyLiked={liked_by_user}
+          initialLikesCount={likes}
+        />
       </div>
     </div>
   );

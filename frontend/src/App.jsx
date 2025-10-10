@@ -16,14 +16,6 @@ function App() {
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
 
-  /**
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []); **/
-
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem('token');

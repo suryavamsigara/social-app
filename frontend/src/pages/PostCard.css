@@ -83,7 +83,22 @@
 .post-action:nth-child(1):hover { color: #1d9bf0; }
 .post-action:nth-child(2):hover { color: #00ba7c; }
 .post-action:nth-child(3):hover { color: #9ea316; }
-.post-action:nth-child(4):hover { color: #f01d40; }
+
+.like-button .fa-heart {
+  transition: color 0.2s ease-in-out;
+}
+
+.like-button.notliked {
+  color: rgb(110, 110, 110);
+}
+
+.like-button.notliked:hover {
+  color: #f01d40;
+}
+
+.like-button.liked {
+  color: #f01d40;
+}
 
 @media (max-width: 768px) {
   .posts-feed {
