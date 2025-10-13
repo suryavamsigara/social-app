@@ -8,8 +8,15 @@ router = APIRouter(
     tags=['Users']
 )
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Userout)
+@router.post("/register", status_code=status.HTTP_201_CREATED, response_model=schemas.Userout)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    existing_user_email = db.query(models.User).filter(models.User.email == user.email).first()
+    if existing_user_email:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
+    
+    existing_user_username = db.query(models.User).filter(models.User.username == user.username).first()
+    if existing_user_username:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username already taken")
 
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
@@ -26,7 +33,7 @@ def get_user_by_username(username: str, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.username == username).first()
 
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id {username} does not exist")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with username: {username} does not exist")
 
     return user
 

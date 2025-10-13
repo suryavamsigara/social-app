@@ -6,13 +6,16 @@ import { SideBar } from './components/SideBar';
 import { ProfilePage } from './pages/ProfilePage';
 import { CreatePost } from './components/CreatePost';
 import { UserLogin } from './components/UserLogin';
+import { CreateAccount } from './pages/CreateAccount';
+import { RegisterOrLogin } from './components/RegisterOrLogin';
 import './App.css'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterOrLoginModalOpen, setIsRegisterOrLoginModalOpen] = useState(false);
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
 
@@ -28,7 +31,13 @@ function App() {
           const userData = await response.json();
           setCurrentUser(userData);
           setIsAuthenticated(true);
+        } else {
+          localStorage.removeItem('token');
+          setIsAuthenticated(false);
+          setIsRegisterOrLoginModalOpen(true);
         }
+      } else {
+        setIsRegisterOrLoginModalOpen(true);
       }
     };
     fetchCurrentUser();
@@ -60,12 +69,16 @@ function App() {
     setPosts([formattedPost, ...posts]);
   };
 
-  const handleLogin = () => {
-    setIsLoginModalOpen(true);
-  };
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
+    setCurrentUser(null);
+    setIsRegisterOrLoginModalOpen(true);
+  };
+
+  const openLoginModal = () => {
+    setIsRegisterOrLoginModalOpen(false);
+    setIsLoginModalOpen(true);
   };
 
   return (
@@ -74,7 +87,7 @@ function App() {
       <SideBar
         onPostClick={() => setIsCreatePostModalOpen(true)}
         isAuthenticated={isAuthenticated}
-        onLogin={handleLogin}
+        onLogin={() => {setIsRegisterOrLoginModalOpen(true)}}
         onLogout={handleLogout}
         currentUser={currentUser}
       />
@@ -82,17 +95,24 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage posts={posts} />} />
           <Route path="/profile/:username" element={<ProfilePage currentUser={currentUser} />} />
+          <Route path="/register" element={<CreateAccount />} />
         </Routes>
       </div>
-      <CreatePost
-        isOpen={isCreatePostModalOpen}
-        onClose={() => setIsCreatePostModalOpen(false)}
-        onPostCreated={addPost}
+      <RegisterOrLogin
+        isOpen={isRegisterOrLoginModalOpen}
+        onClose={() => setIsRegisterOrLoginModalOpen(false)}
+        onLoginClick={openLoginModal}
       />
       <UserLogin
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         setIsAuthenticated={setIsAuthenticated}
+        setCurrentUser={setCurrentUser}
+      />
+      <CreatePost
+        isOpen={isCreatePostModalOpen}
+        onClose={() => setIsCreatePostModalOpen(false)}
+        onPostCreated={addPost}
       />
     </>
   );

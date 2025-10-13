@@ -4,7 +4,6 @@ import './PostCard.css'
 
 export function PostCard({postData}) {
   const { Post, likes, reposts, liked_by_user } = postData;
-  console.log("Post ID:", Post.id, " is liked by current user:", liked_by_user);
 
   return (
     <div className="post-card">

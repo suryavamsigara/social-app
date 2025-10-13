@@ -4,6 +4,7 @@ import './UserLogin.css';
 export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   
   if (!isOpen) {
     return null;
@@ -25,6 +26,7 @@ export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
       });
 
       if (!response.ok) {
+        setError("Authentication failed. Enter valid email and password.");
         throw new Error(`HTTP Error! Status: ${response.status}`);
       }
 
@@ -37,6 +39,7 @@ export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
       setEmail('');
       setPassword('');
       onClose();
+      setError('');
     } catch (error) {
       console.error("Failed to login: ", error);
     }
@@ -44,6 +47,7 @@ export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
+      <div className="show-error">{error}</div>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-body">
           <input 

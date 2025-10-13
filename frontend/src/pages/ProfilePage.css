@@ -9,35 +9,13 @@
 
 .profile-hero {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 150px 150px;
+  grid-template-columns: 1fr;
   gap: 4px;
   position: relative;
   height: 300px;
 }
 
-.hero-item-large {
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
-}
-.hero-item-small {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-}
-.hero-item-text {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  background-color: rgb(25, 25, 25);
-  padding: 15px;
-  color: rgb(200, 200, 200);
-  font-style: italic;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.hero-item-large, .hero-item-small {
+.hero-item {
   background-size: cover;
   background-position: center;
 }
@@ -127,12 +105,6 @@
   .hero-item-large {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
-  }
-
-  /* hiding those two small grid items on phone */
-  .hero-item-small,
-  .hero-item-text {
-    display: none;
   }
 
   .hero-user-info {

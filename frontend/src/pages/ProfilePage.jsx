@@ -74,12 +74,7 @@ export function ProfilePage({ currentUser }) {
   return (
     <div className="profile-page-container">
       <div className="profile-hero">
-        <div className="hero-item-large" style={{ backgroundImage: `url(${userProfile.featuredPosts[0].imageUrl})` }}></div>
-        <div className="hero-item-small" style={{ backgroundImage: `url(${userProfile.featuredPosts[1].imageUrl})` }}></div>
-        <div className="hero-item-text">
-            <p>"{userProfile.featuredPosts[2].text}"</p>
-        </div>
-        
+        <div className="hero-item" style={{ backgroundImage: `url(${userProfile.featuredPosts[0].imageUrl})` }}></div>
         <div className="hero-user-info">
             <img src={userProfile.avatarUrl} alt="User avatar" className="hero-avatar" />
             <div>
