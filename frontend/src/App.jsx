@@ -46,17 +46,21 @@ function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       const token = localStorage.getItem('token');
+      const headers = {};
       if (token) {
-        const response = await fetch('http://127.0.0.1:8000/posts', {
-          headers: {'Authorization': `Bearer ${token}`}
-        });
+        headers['Authorization'] = `Bearer ${token}`;
+      }
 
+      try {
+        const response = await fetch('http://127.0.0.1:8000/posts', {headers});
         if (response.ok) {
           const data = await response.json();
           setPosts(data)
         }
+      } catch (error) {
+        console.error("Failed to fetch posts: ", error);
       }
-    }
+    };
     fetchPosts();
   }, [isAuthenticated]);
 

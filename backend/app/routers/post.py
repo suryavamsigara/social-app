@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[schemas.PostOut])
-def get_posts(db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
+def get_posts(db: Session = Depends(get_db), current_user: Optional[models.User] = Depends(oauth2.get_current_user_optional)):
     likes_cte = (
         select(models.Like.post_id, func.count(models.Like.user_id).label("likes"))
         .group_by(models.Like.post_id)
@@ -23,11 +23,19 @@ def get_posts(db: Session = Depends(get_db), current_user: models.User = Depends
         .group_by(models.Repost.post_id)
         .cte("reposts_cte")
     )
-    user_likes_cte = (
-        select(models.Like.post_id.label("post_id"))
-        .where(models.Like.user_id == current_user.id)
-        .cte("user_likes_cte")
-    )
+
+    if current_user:
+        user_likes_cte = (
+            select(models.Like.post_id.label("post_id"))
+            .where(models.Like.user_id == current_user.id)
+            .cte("user_likes_cte")
+        )
+    else:
+        user_likes_cte = (
+            select(models.Like.post_id.label("post_id"))
+            .where(models.Like.user_id == -1)
+            .cte("user_likes_cte")
+        )
 
     results = db.query(
         models.Post,
