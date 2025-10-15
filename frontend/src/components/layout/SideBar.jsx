@@ -55,7 +55,10 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
       <div className="right-sidebar">
         <div className="sidebar-item">
           <i className="fa fa-feed feed-icon"></i>
-          <div>Set Feed</div>
+          <div>Change Feed</div>
+        </div>
+        <div>
+          <div className="sidebar-item">QuirkyAI</div>
         </div>
       </div>
 

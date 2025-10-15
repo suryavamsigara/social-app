@@ -1,4 +1,4 @@
-import { PostCard } from './PostCard'
+import { PostCard } from '../components/posts/PostCard'
 
 export function PostsFeed({ posts, onDeletePost, currentUser }) {
 

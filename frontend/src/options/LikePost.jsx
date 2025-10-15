@@ -1,5 +1,5 @@
 import { useState } from "react";
-import '../pages/PostCard.css'
+import '../components/posts/PostCard.css';
 
 export function LikePost({ postId, isInitiallyLiked, initialLikesCount }) {
   const [liked, setLiked] = useState(isInitiallyLiked);

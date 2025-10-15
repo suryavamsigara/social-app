@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { LikePost } from '../options/LikePost';
-import { MenuModal } from '../options/MenuModal';
-import { TimeAgo } from '../components/TimeAgo';
+import { LikePost } from '../../options/LikePost';
+import { MenuModal } from '../../options/MenuModal';
+import { TimeAgo } from '../TimeAgo';
 import './PostCard.css';
 
 export function PostCard({postData, currentUser, onDeletePost}) {

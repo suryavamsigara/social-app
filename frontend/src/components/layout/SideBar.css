@@ -70,13 +70,13 @@
 
 .auth-button {
   margin-top: auto;
-  background-color: #154361;
+  background-color: rgb(8, 101, 144);
   font-weight: bold;
   justify-content: center;
 }
 
 .auth-button:hover {
-  background-color: #104b72;
+  background-color: #185883;
 }
 
 

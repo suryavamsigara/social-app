@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
-import { Header } from './components/Header';
-import { SideBar } from './components/SideBar';
+import { Header } from './components/layout/Header';
+import { SideBar } from './components/layout/SideBar';
 import { ProfilePage } from './pages/ProfilePage';
-import { CreatePost } from './components/CreatePost';
+import { CreatePost } from './components/posts/CreatePost';
 import { UserLogin } from './components/UserLogin';
 import { CreateAccount } from './pages/CreateAccount';
 import { RegisterOrLogin } from './components/RegisterOrLogin';

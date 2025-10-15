@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PostCard } from './PostCard';
+import { PostCard } from '../components/posts/PostCard';
 import { useParams } from 'react-router-dom';
 import './ProfilePage.css';
 
