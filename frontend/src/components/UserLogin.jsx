@@ -48,7 +48,7 @@ export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="show-error">{error}</div>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="login-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-body">
           <input 
             className="username-input"
