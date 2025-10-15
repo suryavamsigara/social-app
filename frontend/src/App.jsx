@@ -85,6 +85,10 @@ function App() {
     setIsLoginModalOpen(true);
   };
 
+  const deletePostFromState = (postId) => {
+    setPosts(currentPosts => currentPosts.filter(p => p.Post.id !== postId));
+  }
+
   return (
     <>
       <Header />
@@ -97,8 +101,18 @@ function App() {
       />
       <div className="main-content">      
         <Routes>
-          <Route path="/" element={<HomePage posts={posts} />} />
-          <Route path="/profile/:username" element={<ProfilePage currentUser={currentUser} />} />
+          <Route path="/" element={<HomePage
+              posts={posts}
+              onDeletePost={deletePostFromState}
+              currentUser={currentUser}
+            />}
+          
+          />
+          <Route path="/profile/:username" element={<ProfilePage
+              currentUser={currentUser}
+              onDeletePost={deletePostFromState}
+            />}
+          />
           <Route path="/register" element={<CreateAccount />} />
         </Routes>
       </div>

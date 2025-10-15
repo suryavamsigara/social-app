@@ -3,7 +3,7 @@ import { PostCard } from './PostCard';
 import { useParams } from 'react-router-dom';
 import './ProfilePage.css';
 
-export function ProfilePage({ currentUser }) {
+export function ProfilePage({ currentUser, onDeletePost }) {
   const userProfile = {
     name: "Surya",
     username: "surya123",
@@ -105,7 +105,12 @@ export function ProfilePage({ currentUser }) {
         </div>
         <div className="profile-posts-list">
           {posts.map(postData => (
-            <PostCard key={postData.Post.id} postData={postData} />
+            <PostCard
+              key={postData.Post.id}
+              postData={postData}
+              onDeletePost={onDeletePost}
+              currentUser={currentUser}
+            />
           ))}
         </div>
       </div>

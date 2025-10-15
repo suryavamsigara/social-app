@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { LikePost } from '../options/LikePost';
+import { MenuModal } from '../options/MenuModal';
 import { TimeAgo } from '../components/TimeAgo';
-import './PostCard.css'
+import './PostCard.css';
 
-export function PostCard({postData}) {
+export function PostCard({postData, currentUser, onDeletePost}) {
   const { Post, likes, reposts, liked_by_user } = postData;
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isOwner = currentUser && Number(currentUser.id) === Number(Post.owner_id);
+  
   return (
     <div className="post-card">
       <div className="post-header">
@@ -12,6 +16,20 @@ export function PostCard({postData}) {
         <div className="post-author">
           <span className="post-author-name">{Post.owner.name}</span>
           <span className="post-author-username">@{Post.owner.username} · {<TimeAgo timestamp={Post.created_at} />}</span>
+        </div>
+        <div className="post-menu-container">
+          <button className="menu-button" onClick={() => setIsMenuOpen(true)}>
+            <i className="fa">&#xFE19;</i>
+          </button>
+
+          {isMenuOpen && (
+            <MenuModal
+              postId={Post.id}
+              postOwner={isOwner}
+              onClose={() => setIsMenuOpen(false)}
+              onDelete={onDeletePost}
+            />
+          )}
         </div>
       </div>
 

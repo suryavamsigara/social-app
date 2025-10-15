@@ -19,7 +19,7 @@ export function LikePost({ postId, isInitiallyLiked, initialLikesCount }) {
     try {
       const token = localStorage.getItem('token');
 
-      if (!token) throw new Error("Authentication token ledhu")
+      if (!token) throw new Error("Not authorized");
 
       const response = await fetch('http://127.0.0.1:8000/like/', {
         method: 'POST',

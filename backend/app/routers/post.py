@@ -62,6 +62,20 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), curren
     db.refresh(new_post)
     return new_post
 
+@router.delete("/delete/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    post_query = db.query(models.Post).filter(models.Post.id == id)
+    post = post_query.first()
+    if post == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id: {id} doesn't exist")
+    
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"You can't perform this action")
+    post_query.delete(synchronize_session=False)
+    db.commit()
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
 @router.get("/user/{username}", response_model=List[schemas.PostOut])
 def get_posts_by_user(username: str, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
 
