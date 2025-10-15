@@ -68,6 +68,10 @@
   text-align: center;
 }
 
+.ai-logo {
+  width: 28px;
+}
+
 .auth-button {
   margin-top: auto;
   background-color: rgb(8, 101, 144);
@@ -148,5 +152,10 @@
 
   .bottom-nav-item.active {
     color: white;
+  }
+
+  .quirky-logo {
+    width: 28px;
+    padding-top: 8px;
   }
 }

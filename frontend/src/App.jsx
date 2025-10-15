@@ -8,6 +8,7 @@ import { CreatePost } from './components/posts/CreatePost';
 import { UserLogin } from './components/UserLogin';
 import { CreateAccount } from './pages/CreateAccount';
 import { RegisterOrLogin } from './components/RegisterOrLogin';
+import { QuirkyAi } from './components/ai/QuirkyAi';
 import './App.css'
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
   const [isRegisterOrLoginModalOpen, setIsRegisterOrLoginModalOpen] = useState(false);
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
+
+  const [mainView, setMainView] = useState('feed');
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -98,6 +101,7 @@ function App() {
         onLogin={() => {setIsRegisterOrLoginModalOpen(true)}}
         onLogout={handleLogout}
         currentUser={currentUser}
+        onChangeView={setMainView}
       />
       <div className="main-content">      
         <Routes>
@@ -105,6 +109,8 @@ function App() {
               posts={posts}
               onDeletePost={deletePostFromState}
               currentUser={currentUser}
+              view={mainView}
+              onChangeView={setMainView}
             />}
           
           />

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './SideBar.css';
 
-export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, currentUser }) {
+export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, currentUser, onChangeView }) {
   return (
     <>
       <div className="left-sidebar">
@@ -57,8 +57,9 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
           <i className="fa fa-feed feed-icon"></i>
           <div>Change Feed</div>
         </div>
-        <div>
-          <div className="sidebar-item">QuirkyAI</div>
+        <div className="sidebar-item" onClick={() => onChangeView('ai_chat')}>
+          <img src="../../../public/quirky.png" className="ai-logo"></img>
+          <div>QuirkyAI</div>
         </div>
       </div>
 
@@ -67,9 +68,9 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
         <NavLink to="/" className="bottom-nav-item">
           <i className="fa fa-home"></i>
         </NavLink>
-        <NavLink to="/search" className="bottom-nav-item">
-          <i className="fa fa-search"></i>
-        </NavLink>
+        <div className="bottom-nav-item" onClick={() => onChangeView('ai_chat')}>
+          <img src="../../../public/quirky.png" className="quirky-logo" />
+        </div>
         <NavLink className="create-post-button bottom-nav-item" onClick={onPostClick}>
           <i className="fa fa-plus"></i>
         </NavLink>

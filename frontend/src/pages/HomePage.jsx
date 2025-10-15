@@ -1,15 +1,15 @@
 import './HomePage.css'
 import { PostsFeed } from './PostsFeed';
+import { QuirkyAi } from '../components/ai/QuirkyAi';
 
-export function HomePage({ posts, onDeletePost, currentUser }) {
+export function HomePage({ posts, onDeletePost, currentUser, view, onChangeView }) {
   return (
-    <>
-      <title>Social App</title>
-      <PostsFeed
-        posts={posts}
-        onDeletePost={onDeletePost}
-        currentUser={currentUser}
-      />
-    </>
+      view === 'feed'
+        ? <PostsFeed
+            posts={posts}
+            onDeletePost={onDeletePost}
+            currentUser={currentUser}
+          />
+        : <QuirkyAi onClose={() => onChangeView('feed')} />
   );
 }
