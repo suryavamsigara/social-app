@@ -7,16 +7,36 @@ export function QuirkyAi({ onClose }) {
   ]);
   const [inputText, setInputText] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!inputText.trim()) return;
 
     const userMessage = { from: 'user', text: inputText };
-    setMessages(prev => [...prev, userMessage]);
-
-    const aiResponse = { from: 'ai', text: 'That is interesting'};
-    setMessages(prev => [...prev, aiResponse]);
-
+    setMessages(prev => [...prev, userMessage, { from: 'ai', text: '...' }]);
+    
+    const messageToSend = inputText;
     setInputText('');
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/quirky/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: messageToSend}),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get response from AI");
+      }
+
+      const data = await response.json();
+      const aiResponse = {from: 'ai', text: data.reply};
+
+      setMessages(prev => [...prev.slice(0, -1), aiResponse]);
+
+    } catch (error) {
+      console.error("AI chat error:", error);
+      const errorResponse = {from: 'ai', text: 'Sorry! I am having trouble connecting.'};
+      setMessages(prev => [...prev.slice(0, -1), errorResponse]);
+    }
   };
 
   return (

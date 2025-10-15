@@ -66,3 +66,10 @@ class Like(BaseModel):
 class Repost(BaseModel):
     post_id: int
     dir: Literal[0, 1]
+
+class ChatRequest(BaseModel):
+    message: str
+
+class ChatResponse(BaseModel):
+    reply: str
+    

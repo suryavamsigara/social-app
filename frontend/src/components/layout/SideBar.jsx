@@ -58,7 +58,7 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
           <div>Change Feed</div>
         </div>
         <div className="sidebar-item" onClick={() => onChangeView('ai_chat')}>
-          <img src="../../../public/quirky.png" className="ai-logo"></img>
+          <img src="/quirky.png" className="ai-logo"></img>
           <div>QuirkyAI</div>
         </div>
       </div>
@@ -69,7 +69,7 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
           <i className="fa fa-home"></i>
         </NavLink>
         <div className="bottom-nav-item" onClick={() => onChangeView('ai_chat')}>
-          <img src="../../../public/quirky.png" className="quirky-logo" />
+          <img src="/quirky.png" className="quirky-logo" />
         </div>
         <NavLink className="create-post-button bottom-nav-item" onClick={onPostClick}>
           <i className="fa fa-plus"></i>

@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from .database import engine
 from . import models
-from .routers import post, user, auth, likes, repost
+from .routers import post, user, auth, likes, repost, quirky
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -35,6 +35,7 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(likes.router)
 app.include_router(repost.router)
+app.include_router(quirky.router)
 
 @app.get("/")
 def root():

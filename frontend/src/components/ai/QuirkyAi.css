@@ -48,13 +48,13 @@
 }
 
 .message-from.ai {
-  background-color: #262626;
+  background-color: #232222;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
 }
 
 .message-from.user {
-  background-color: #2978ac;
+  background-color: #1d2931;
   color: white;
   align-self: flex-end;
   border-bottom-right-radius: 4px;
