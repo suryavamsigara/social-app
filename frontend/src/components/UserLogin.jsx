@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import './UserLogin.css';
 
 export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const passWordInputRef = useRef(null);
   
   if (!isOpen) {
     return null;
   }
+
+  const handleUsernameKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      passWordInputRef.current.focus();
+    }
+  };
 
   const handleAPILogin = async () => {
     const loginData = {
@@ -55,6 +64,7 @@ export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => handleUsernameKeyDown(e)}
           />
           <input 
             className="password-input"
@@ -62,6 +72,8 @@ export function UserLogin({ isOpen, onClose, setIsAuthenticated }) {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAPILogin()}
+            ref={passWordInputRef}
           />
         </div>
         <div className="modal-footer">

@@ -43,6 +43,21 @@
   font-size: 15px;
 }
 
+.post-menu-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.quirky-summarize {
+  position: absolute;
+  right: 40px;
+}
+
+.quirky-summarize-img {
+  width: 22px;
+  padding-top: 3px;
+}
+
 .post-body {
   margin-top: 10px;
 }

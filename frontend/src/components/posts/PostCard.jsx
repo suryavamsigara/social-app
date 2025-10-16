@@ -18,6 +18,9 @@ export function PostCard({postData, currentUser, onDeletePost}) {
           <span className="post-author-username">@{Post.owner.username} · {<TimeAgo timestamp={Post.created_at} />}</span>
         </div>
         <div className="post-menu-container">
+          <div className="quirky-summarize">
+            <img src="/quirky.png" className="quirky-summarize-img"></img>
+          </div>
           <button className="menu-button" onClick={() => setIsMenuOpen(true)}>
             <i className="fa">&#xFE19;</i>
           </button>

@@ -19,6 +19,10 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
               <i className="fa fa-envelope message-icon"></i>
               <div>Messages</div>
             </div>
+            <button className="sidebar-item create-post-button" onClick={onPostClick}>
+              <i className="fa fa-plus plus-icon"></i>
+              <div>Create</div>
+            </button>
             <div className="sidebar-item">
               <i className="fa fa-gear settings-icon"></i>
               <div>Settings</div>
@@ -27,9 +31,9 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
               <i className="fa fa-user user-icon"></i>
               <div>Profile</div>
             </NavLink>
-            <button className="sidebar-item create-post-button" onClick={onPostClick}>
-              <i className="fa fa-plus user-icon"></i>
-              <div>Create</div>
+            <button className="sidebar-item bookmarks-button">
+              <i className="fa fa-bookmark bookmark-icon"></i>
+              <div>Bookmarks</div>
             </button>
 
             <button className="sidebar-item auth-button" onClick={onLogout}>
