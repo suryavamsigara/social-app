@@ -38,7 +38,7 @@ class ShortTermMemory:
             .filter(models.ChatMessage.user_id == user_id)
             .order_by(models.ChatMessage.created_at.desc())
             .offset(self.max_messages)
-            .subquery()
+            .scalar_subquery()
         )
         
         self.db.query(models.ChatMessage).filter(models.ChatMessage.id.in_(subquery)).delete(synchronize_session=False)

@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from .. import schemas, oauth2
+from .. import schemas, oauth2, models
 from ..database import get_db
 from app.memory.short_term import ShortTermMemory
 from openai import OpenAI
@@ -55,3 +55,15 @@ async def handle_chat(
         print(f"Error: {e}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail=f"Unable to communicate")
+
+@router.get("/history")
+def get_chat_history(current_user: int = Depends(oauth2.get_current_user), db: Session = Depends(get_db)):
+    messages = (db.query(models.ChatMessage)
+        .filter_by(user_id=current_user.id)
+        .order_by(models.ChatMessage.created_at).all()
+    )
+
+    if not messages:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No messages")
+
+    return {"messages": [{"role": m.role, "text": m.content} for m in messages]}

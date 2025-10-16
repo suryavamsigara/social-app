@@ -3,7 +3,7 @@ import './QuirkyAi.css';
 
 export function QuirkyAi({ onClose }) {
   const [messages, setMessages] = useState([
-    {role: 'ai', text: 'Hello! I am QuirkyAI. How can I help you?'}
+    {role: 'assistant', text: 'Hello! I am QuirkyAI. How can I help you?'}
   ]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -14,12 +14,28 @@ export function QuirkyAi({ onClose }) {
     chatEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
+  useEffect(() => {
+    async function fetchHistory() {
+      const token = localStorage.getItem('token');
+
+      const res = await fetch('http://127.0.0.1:8000/quirky/history', {
+        headers: {Authorization: `Bearer ${token}`}
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setMessages(data.messages);
+      }
+    }
+    fetchHistory();
+  }, []);
+
   const handleSend = async () => {
     if (!inputText.trim() || isLoading) return;
     setIsLoading(true);
 
     const userMessage = { role: 'user', text: inputText };
-    setMessages(prev => [...prev, userMessage, { role: 'ai', text: '', loading: true}]);
+    setMessages(prev => [...prev, userMessage, { role: 'assistant', text: '', loading: true}]);
     
     const messageToSend = inputText;
     setInputText('');
@@ -46,13 +62,13 @@ export function QuirkyAi({ onClose }) {
       }
 
       const data = await response.json();
-      const aiResponse = {role: 'ai', text: data.reply};
+      const aiResponse = {role: 'assistant', text: data.reply};
 
       setMessages(prev => [...prev.slice(0, -1), aiResponse]);
 
     } catch (error) {
       console.error("AI chat error:", error);
-      const errorResponse = {role: 'ai', text: 'Sorry! I am having trouble connecting.'};
+      const errorResponse = {role: 'assistant', text: 'Sorry! I am having trouble connecting.'};
       setMessages(prev => [...prev.slice(0, -1), errorResponse]);
     }
     
