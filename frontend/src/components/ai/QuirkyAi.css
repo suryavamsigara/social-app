@@ -51,6 +51,38 @@
   background-color: #232222;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
+  white-space: pre-wrap;
+}
+
+.pulse {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #737373;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #1da1f2;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 4px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .message-from.user {
