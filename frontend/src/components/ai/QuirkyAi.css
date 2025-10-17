@@ -2,9 +2,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 50px);
-  background-color: #000;
-  border-left: 1px solid rgb(30, 30, 30);
-  border-right: 1px solid rgb(30, 30, 30);
+  background-color: #131313;
   max-width: 750px;
   margin: 0 auto;
   width: 100%;
@@ -15,7 +13,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid rgb(30, 30, 30);
+  border-bottom: 1px solid #1e1e1e;
 }
 
 .ai-chat-header h3 {
@@ -37,19 +35,24 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  scrollbar-width: none;
+}
+
+.ai-message-list::-webkit-scrollbar {
+  display: none;
 }
 
 .message-from {
   padding: 10px 15px;
   border-radius: 18px;
-  max-width: 75%;
   line-height: 1.5;
   word-break: break-word;
   white-space: pre-wrap;
 }
 
 .message-from.assistant {
-  background-color: #2f3336;
+  /**background-color: #2f3336;**/
   align-self: flex-start;
   border-bottom-left-radius: 4px;
   white-space: pre-wrap;
@@ -58,8 +61,8 @@
 .pulse {
   content: '';
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   margin-left: 6px;
   border-radius: 50%;
   background: #ececec;
@@ -71,6 +74,7 @@
   50% { opacity: 1; }
 }
 
+/**
 .spinner {
   width: 14px;
   height: 14px;
@@ -85,10 +89,11 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+**/
 
 .message-from.user {
-  background-color: #2477ab;
-  color: white;
+  background-color: #1e1e1e;
+  color: #eaeaea;
   align-self: flex-end;
   border-bottom-right-radius: 4px;
 }
@@ -96,7 +101,6 @@
 .ai-chat-input-area {
   display: flex;
   padding: 15px;
-  border-top: 1px solid rgb(30, 30, 30);
   gap: 10px;
 }
 
@@ -105,19 +109,20 @@
   background-color: #262626;
   border: 1px solid #262626;
   border-radius: 20px;
-  padding: 10px 15px;
-  color: white;
+  padding: 12px 15px;
+  color: rgb(226, 226, 226);
   font-size: 16px;
 }
+
 .ai-chat-input-area input:focus {
   outline: none;
-  border-color: #1d9bf0;
+  border-color: #b5b5b5;
 }
 
 .ai-chat-input-area button {
-  background-color: #2572a6;
+  background-color: #1e1e1e;
   border: none;
-  color: white;
+  color: #ececec;
   font-weight: bold;
   padding: 0 20px;
   border-radius: 20px;

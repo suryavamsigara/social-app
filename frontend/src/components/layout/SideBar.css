@@ -1,6 +1,6 @@
 .left-sidebar {
-  background-color: rgb(1, 1, 1);
-  color: white;
+  background-color: #131313;
+  color: #dcdcdc;
   width: 240px;
   border-right: 1px solid rgb(30, 30, 30);
   border-top: 1px solid rgb(30, 30, 30);
@@ -18,7 +18,7 @@
 
 .right-sidebar {
   background-color: rgb(1, 1, );
-  color: white;
+  color: #dcdcdc;
   width: 240px;
   border-left: 1px solid rgb(30, 30, 30);
   border-top: 1px solid rgb(30, 30, 30);
@@ -45,7 +45,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  color: white; 
+  color: #dcdcdc; 
   text-decoration: none;
   background-color: transparent;
   border: none;
@@ -54,12 +54,12 @@
 }
 
 .sidebar-item:hover {
-  background-color: rgb(20, 20, 20);
+  background-color: #1e1e1e;
 }
 
 .sidebar-item.active {
   font-weight: bold;
-  background-color: rgb(20, 20, 20);
+  background-color: #1e1e1e;
 }
 
 .sidebar-item i {
@@ -74,13 +74,13 @@
 
 .auth-button {
   margin-top: auto;
-  background-color: rgb(8, 101, 144);
+  background-color: #191919;
   font-weight: bold;
   justify-content: center;
 }
 
 .auth-button:hover {
-  background-color: #185883;
+  background-color: #222222;
 }
 
 
@@ -140,7 +140,7 @@
     left: 0;
     right: 0;
     height: 60px;
-    background-color: #000;
+    background-color: #131313;
     border-top: 1px solid rgb(30, 30, 30);
     z-index: 1000;
   }
@@ -151,7 +151,7 @@
   }
 
   .bottom-nav-item.active {
-    color: white;
+    color: #dcdcdc;
   }
 
   .quirky-logo {
