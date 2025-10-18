@@ -5,7 +5,7 @@ from ..database import get_db
 from collections import deque
 
 class ShortTermMemory:
-    def __init__(self, db: Session = Depends(get_db), max_messages=5):
+    def __init__(self, db: Session = Depends(get_db), max_messages=20):
         self.db = db
         self.max_messages = max_messages
 

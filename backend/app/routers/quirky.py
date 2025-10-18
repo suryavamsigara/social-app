@@ -4,16 +4,21 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from .. import schemas, oauth2, models
 from ..database import get_db
+from ..config import settings
 from app.memory.short_term import ShortTermMemory
-from openai import OpenAI
+from google import genai
+from google.genai import types
 
 load_dotenv()
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-if not openai_api_key:
+gemini_api_key = settings.gemini_api_key
+
+if not gemini_api_key:
     print("Environment variable not found")
 
-openai_client = OpenAI(api_key=openai_api_key)
+client = genai.Client(api_key=gemini_api_key)
+
+system_prompt = """You are QuirkyAI, a helpful and witty assistant."""
 
 router = APIRouter(
     prefix="/quirky",
@@ -30,29 +35,34 @@ async def handle_chat(
     user_id = current_user.id
     user_message = request.message
 
-    if not openai_api_key:
+    if not gemini_api_key:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                             detail=f"API key not found")
     
     memory.add(user_id, "user", user_message)
     context = memory.get_context(user_id)
 
+    messages = [types.Content(role="user", parts=[types.Part(text=msg["content"])]) for msg in context]
+    messages.append(types.Content(role="user", parts=[types.Part(text=user_message)]))
+
+    config = types.GenerateContentConfig(system_instruction=system_prompt)
+
     try:
-        completion = openai_client.chat.completions.create(
-            model="gpt-5-nano",
-            messages=[
-                {"role": "system", "content": "You are QuirkyAI, a helpful and witty assistant."},
-                *context
-            ]
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-001",
+            contents=[
+                *messages
+            ],
+            config=config
         )
 
-        reply = completion.choices[0].message.content
+        reply = response.candidates[0].content.parts[0].text
         
         memory.add(user_id, "assistant", reply)
         return {"reply": reply}
 
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Gemini API Error: {e}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail=f"Unable to communicate")
 
