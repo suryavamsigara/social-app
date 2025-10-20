@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     algorithm: str
     access_token_expire_minutes: int
     gemini_api_key: str
+    pinecone_api_key: str
+    pinecone_index_name: str
 
     class Config:
         env_file = ".env"
