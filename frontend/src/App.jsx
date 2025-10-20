@@ -6,6 +6,7 @@ import { SideBar } from './components/layout/SideBar';
 import { ProfilePage } from './pages/ProfilePage';
 import { CreatePost } from './components/posts/CreatePost';
 import { DisplayPost } from './components/posts/DisplayPost';
+import { ChangeFeedModal } from './options/ChangeFeedModal';
 import { UserLogin } from './components/UserLogin';
 import { CreateAccount } from './pages/CreateAccount';
 import { RegisterOrLogin } from './components/RegisterOrLogin';
@@ -19,6 +20,8 @@ function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterOrLoginModalOpen, setIsRegisterOrLoginModalOpen] = useState(false);
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
+  const [isChangeFeedModalOpen, setIsChangeFeedModalOpen] = useState(false);
+  const [feedTopic, setFeedTopic] = useState('');
   const [posts, setPosts] = useState([]);
 
   const [mainView, setMainView] = useState('feed');
@@ -55,18 +58,28 @@ function App() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
+      let url;
+
+      if (feedTopic) {
+        url = `http://127.0.0.1:8000/posts/recommend?query=${encodeURIComponent(feedTopic)}`;
+      } else {
+        url = 'http://127.0.0.1:8000/posts/';
+      }
+
       try {
-        const response = await fetch('http://127.0.0.1:8000/posts', {headers});
+        const response = await fetch(url, {headers});
         if (response.ok) {
           const data = await response.json();
           setPosts(data)
+        } else if (response.status === 404) {
+          console.log("No similar posts found for this topic");
         }
       } catch (error) {
         console.error("Failed to fetch posts: ", error);
       }
     };
     fetchPosts();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, feedTopic]);
 
   const addPost = (newPost) => {
     const formattedPost = {
@@ -82,12 +95,22 @@ function App() {
     setIsAuthenticated(false);
     setCurrentUser(null);
     setIsRegisterOrLoginModalOpen(true);
+    setFeedTopic('');
   };
 
   const openLoginModal = () => {
     setIsRegisterOrLoginModalOpen(false);
     setIsLoginModalOpen(true);
   };
+
+  const openChangeFeedModal = () => {
+    console.log("Trying to open change feed modal")
+    setIsChangeFeedModalOpen(true);
+  }
+
+  const handleTopicSubmit = (newTopic) => {
+    setFeedTopic(newTopic);
+  }
 
   const deletePostFromState = (postId) => {
     setPosts(currentPosts => currentPosts.filter(p => p.Post.id !== postId));
@@ -103,6 +126,7 @@ function App() {
         onLogout={handleLogout}
         currentUser={currentUser}
         onChangeView={setMainView}
+        onChangeFeedClick={openChangeFeedModal}
       />
       <div className="main-content">      
         <Routes>
@@ -143,6 +167,11 @@ function App() {
         isOpen={isCreatePostModalOpen}
         onClose={() => setIsCreatePostModalOpen(false)}
         onPostCreated={addPost}
+      />
+      <ChangeFeedModal
+        isOpen={isChangeFeedModalOpen}
+        onClose={() => setIsChangeFeedModalOpen(false)}
+        onTopicSubmit={handleTopicSubmit}
       />
     </>
   );

@@ -33,9 +33,12 @@ def get_embeddings(texts):
 def upsert_vectors(vectors):
     if index is None:
         raise RuntimeError("Pinecone index isn't initialized")
-    index.upsert(vectors=vectors)
+    try:
+        index.upsert(vectors=vectors)
+    except Exception as e:
+        raise RuntimeError(f"Pinecone upsert failed: {e}")
 
-def query_similar(query_text, top_k=5):
+def query_similar(query_text, top_k=100):
     if index is None:
         raise RuntimeError("Pinecone index isn't intialiazed")
     query_embedding = embedding_model.encode(query_text).tolist()

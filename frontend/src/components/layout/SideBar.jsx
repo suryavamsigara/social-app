@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './SideBar.css';
 
-export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, currentUser, onChangeView }) {
+export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, currentUser, onChangeView, onChangeFeedClick }) {
   return (
     <>
       <div className="left-sidebar">
@@ -57,7 +57,7 @@ export function SideBar({ isAuthenticated, onLogin, onLogout, onPostClick, curre
       </div>
 
       <div className="right-sidebar">
-        <div className="sidebar-item">
+        <div className="sidebar-item" onClick={onChangeFeedClick}>
           <i className="fa fa-feed feed-icon"></i>
           <div>Change Feed</div>
         </div>

@@ -62,7 +62,7 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), curren
     db.refresh(new_post)
 
     try:
-        index_single_post(post=new_post)
+        index_single_post(post=new_post, db=db)
         print(f"Indexed new post with post id: {new_post.id}")
     except Exception as e:
         print(f"Failed to index post with id: {new_post.id} - {e}")

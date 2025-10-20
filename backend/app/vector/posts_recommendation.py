@@ -4,7 +4,7 @@ from .. import models, schemas
 from ..database import get_db
 from .vector_db import get_embeddings, upsert_vectors, query_similar, index
 
-def index_single_post(post: schemas.Post, db: Session = Depends(get_db)):
+def index_single_post(post: schemas.Post, db: Session):
     post = db.query(models.Post).filter(models.Post.id == post.id).first()
     embedding = get_embeddings([post.content])[0]
 
@@ -59,9 +59,19 @@ def index_posts_in_vector_db(db: Session):
     print(f"Indexed {len(vectors)} posts")
     return {"message": f"Indexed {len(vectors)} posts in Pinecone."}
 
+SIMILARITY_THRESHOLD = 0.2
+
 def recommend_posts(db: Session, query: str, top_k: int=5):
-    results = query_similar(query, top_k)
-    post_ids = [int(match['metadata']['post_id']) for match in results['matches']]
+    results = query_similar(query, top_k=100)
+    relevant_matches = [
+        match for match in results.get('matches', [])
+        if match['score'] >= SIMILARITY_THRESHOLD
+    ]
+
+    if not relevant_matches:
+        return []
+    
+    post_ids = [int(match['id']) for match in relevant_matches]
     posts = db.query(models.Post).filter(models.Post.id.in_(post_ids)).all()
 
     return posts
