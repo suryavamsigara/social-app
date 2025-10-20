@@ -1,16 +1,36 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LikePost } from '../../options/LikePost';
 import { MenuModal } from '../../options/MenuModal';
 import { TimeAgo } from '../TimeAgo';
 import './PostCard.css';
 
 export function PostCard({postData, currentUser, onDeletePost}) {
+  if (!postData || !postData.Post) {
+    console.error("Could not get the post")
+  }
+  
   const { Post, likes, reposts, liked_by_user } = postData;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isOwner = currentUser && Number(currentUser.id) === Number(Post.owner_id);
+
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/post/${Post.id}`);
+  };
+
+  const handleButtonClick = (event) => {
+    event.stopPropagation();
+  }
+
+  const handleMenuClick = (event) => {
+    handleButtonClick(event);
+    setIsMenuOpen(true);
+  }
   
   return (
-    <div className="post-card">
+    <div to={`/post/${Post.id}`} className="post-card" onClick={handleCardClick}>
       <div className="post-header">
         <img src={postData.Post.avatarUrl} alt={`${Post.owner.name}'s avatar`} className="post-avatar" />
         <div className="post-author">
@@ -21,7 +41,7 @@ export function PostCard({postData, currentUser, onDeletePost}) {
           <div className="quirky-summarize">
             <img src="/quirky.png" className="quirky-summarize-img"></img>
           </div>
-          <button className="menu-button" onClick={() => setIsMenuOpen(true)}>
+          <button className="menu-button" onClick={handleMenuClick}>
             <i className="fa">&#xFE19;</i>
           </button>
 
@@ -29,7 +49,7 @@ export function PostCard({postData, currentUser, onDeletePost}) {
             <MenuModal
               postId={Post.id}
               postOwner={isOwner}
-              onClose={() => setIsMenuOpen(false)}
+              onClose={(e) => {handleButtonClick(e); setIsMenuOpen(false);}}
               onDelete={onDeletePost}
             />
           )}
@@ -41,7 +61,7 @@ export function PostCard({postData, currentUser, onDeletePost}) {
         {Post.imageUrl && <img src={Post.imageUrl} alt="Post content" className="post-image" />}
       </div>
 
-      <div className="post-footer">
+      <div className="post-footer" onClick={handleButtonClick}>
         <div className="post-action">
           <i className="fa fa-comment"></i>
           <span>{2}</span>
