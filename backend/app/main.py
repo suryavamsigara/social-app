@@ -22,14 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-try:
-    conn = psycopg2.connect(host='localhost', database='social_app', user='postgres', password='Ilovespacex123', cursor_factory=RealDictCursor)
-    cursor = conn.cursor
-    print("Database connection was successful")
-except Exception as error:
-    print("Connecting to database failed")
-    print("Error: ", error)
-
 app.include_router(post.router)
 app.include_router(user.router)
 app.include_router(auth.router)

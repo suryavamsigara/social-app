@@ -5,6 +5,7 @@ import { Header } from './components/layout/Header';
 import { SideBar } from './components/layout/SideBar';
 import { ProfilePage } from './pages/ProfilePage';
 import { CreatePost } from './components/posts/CreatePost';
+import { DisplayPost } from './components/posts/DisplayPost';
 import { UserLogin } from './components/UserLogin';
 import { CreateAccount } from './pages/CreateAccount';
 import { RegisterOrLogin } from './components/RegisterOrLogin';
@@ -120,6 +121,11 @@ function App() {
             />}
           />
           <Route path="/register" element={<CreateAccount />} />
+          <Route path="/post/:post_id" element={<DisplayPost
+              currentUser={currentUser}
+              onDeletePost={deletePostFromState}
+            />}
+          />
         </Routes>
       </div>
       <RegisterOrLogin
